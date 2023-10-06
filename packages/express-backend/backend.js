@@ -49,8 +49,6 @@ const findUserById = (id) =>
         .find( (user) => user['id'] === id);
     
 const addUser = (user) => {
-
-    
     users['users_list'].push(user);
     return user;
 }
@@ -61,7 +59,7 @@ const findUserByNameAndJob = (name, job) => {
 }
 
 const genId = () => {
-    return Math.random()
+    return Math.floor(Math.random() * 100).toString();
 }
 app.get('/users', (req, res) => {
     const name = req.query.name;
@@ -107,8 +105,8 @@ app.delete('/users/:id', (req, res) => {
     if (result === undefined) {
         res.status(404).send('user not found.');
     } else {
-        users['users_list'].pop(result);
-        res.send("sucessfully deleted user");
+        users['users_list'] = users['users_list'].filter((user) => user['id'] !== id);
+        res.status(204).send();
     }
     
 });

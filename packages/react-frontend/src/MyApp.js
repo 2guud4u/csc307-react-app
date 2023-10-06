@@ -7,10 +7,23 @@ import Form from "./Form";
     const [characters, setCharacters] = React.useState([
     ]);
     function removeOneCharacter(index) {
-      const updated = characters.filter((character, i) => {
-        return i !== index
-      });
-      setCharacters(updated);
+      let id = characters[index].id;
+      console.log("deleting",id )
+      deleteUser(id)
+        .then((res) => {
+          if(res.status === 204) {
+            const updated = characters.filter((character) => {
+              return character.id !== id;
+            });
+            setCharacters(updated);
+          }
+          return res.json();
+        }).then((json) => {
+          console.log(json);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
     }
     function updateList(person) {
       postUser(person)
@@ -31,6 +44,19 @@ import Form from "./Form";
       const promise = fetch("http://localhost:8000/users");
       return promise;
     }
+
+    function deleteUser(id) {
+      const promise = fetch(`Http://localhost:8000/users/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        
+      });
+  
+      return promise;
+    }
+
     function postUser(person) {
       const promise = fetch("Http://localhost:8000/users", {
         method: "POST",
