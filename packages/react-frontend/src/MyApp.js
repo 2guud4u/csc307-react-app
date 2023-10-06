@@ -14,7 +14,15 @@ import Form from "./Form";
     }
     function updateList(person) {
       postUser(person)
-      .then(() => setCharacters([...characters, person]))
+      .then((res) => {
+        if(res.status === 201) {
+          return res.json();
+        }
+      })
+      .then((json) => {
+        person.id = json.id;
+        setCharacters([...characters, person])
+      })
       .catch((error) => {
         console.log(error);
       })
