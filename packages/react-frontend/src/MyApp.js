@@ -33,7 +33,7 @@ import Form from "./Form";
         }
       })
       .then((json) => {
-        person.id = json.id;
+        person._id = json._id;
         setCharacters([...characters, person])
       })
       .catch((error) => {
