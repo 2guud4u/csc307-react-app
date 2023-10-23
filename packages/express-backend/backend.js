@@ -58,11 +58,13 @@ app.post('/users', async (req, res) => {
 app.delete('/users/:id', async (req, res) => {
     const id = req.params['id'];
     const result = await userServices.deleteUser(id);
+    console.log(result)
     if (result)
-        res.status(204).send();
+        res.status(204).send(result);
     else
         res.status(404).send('Resource not found.');
 });
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });

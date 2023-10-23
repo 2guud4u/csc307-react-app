@@ -7,19 +7,20 @@ import Form from "./Form";
     const [characters, setCharacters] = React.useState([
     ]);
     function removeOneCharacter(index) {
-      let id = characters[index].id;
-      console.log("deleting",id )
+
+      let id = characters[index]._id;
+      console.log(characters[index],"deleting",id, "at index", index)
       deleteUser(id)
         .then((res) => {
           if(res.status === 204) {
             const updated = characters.filter((character) => {
-              return character.id !== id;
+              return character._id !== id;
             });
+            console.log(updated)
             setCharacters(updated);
+            
           }
-          return res.json();
-        }).then((json) => {
-          console.log(json);
+          
         })
         .catch((error) => {
           console.log(error);
